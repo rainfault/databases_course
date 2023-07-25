@@ -1,2 +1,2 @@
-# databases_course_miet_software
-database_course
+# Программное обеспечение для курса по базам данных
+# МИЭТ 2023
