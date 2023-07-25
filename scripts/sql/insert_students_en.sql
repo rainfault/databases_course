@@ -7,7 +7,7 @@ delete from Employment;
 delete from Structural_unit;
 delete from Professor;
 delete from Users;
-delete from 
+delete from debtor_students;
 
 
 insert into Structural_unit (unit_type, full_title, abbreviated_title, head_of_the_unit) VALUES
@@ -4364,7 +4364,7 @@ INSERT INTO Users (login, password, acess_level)
 );
 
 INSERT INTO debtor_students (surname, name, patronymic, group_id, debt_subject_id) VALUES
-  ('Михеев', 'Александр', 'Алексеевич', 'ИВТ-41', '2212a60b-1ad4-3eaf-d84b-111286c7511c')
+  ('Михеев', 'Александр', 'Алексеевич', 'ИВТ-41', '2212a60b-1ad4-3eaf-d84b-111286c7511c');
 
 
 INSERT INTO Professor 
