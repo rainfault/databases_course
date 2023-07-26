@@ -2,10 +2,13 @@
 #define METHODIST_H
 
 #include <QWidget>
-#include "subjectselection.h"
-#include "groupselection.h"
+// #include "groupselection.h"
 #include "base/user.h"
-#include "debtorsjournal.h"
+// #include "debtorsjournal.h"
+#include "subjectsmoderation.h"
+//#include "groupselection.h"
+#include "journal.h"
+#include "teachersmoderation.h"
 
 namespace Ui {
 class Methodist;
@@ -24,11 +27,18 @@ public:
     ~Methodist();
 
     void setCurrentUser(const User user);
+    void openTeachersModeration();
+    void openSubjectsModeration();
 
 private:
     Ui::Methodist *ui;
-    SubjectSelection *subjects_window;
-    GroupSelection *groups_window;
+    // SubjectSelection *subjects_window;
+    // GroupSelection *groups_window;
+    SubjectsModeration *subjects_window_;
+    TeachersModeration *teachers_window_;
+    Journal joural_window_;
+
+    void configureBoxesMenus();
 
     User current_methodist_;
 };

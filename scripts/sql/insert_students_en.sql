@@ -4369,5 +4369,6 @@ INSERT INTO debtor_students (surname, name, patronymic, group_id, debt_subject_i
 
 INSERT INTO Professor 
 VALUES (90010,'Полякова','Ольга','Ивановна',null,null,'методист',55,'88000');
+
 INSERT INTO Users (login, password, acess_level) 
-VALUES (90010, '123456',3);
+VALUES (90010, '123456', 2);
