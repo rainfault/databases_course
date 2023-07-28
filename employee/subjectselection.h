@@ -39,6 +39,7 @@ private:
     std::map<QString, QString> subjects_id_;
     User current_user_;
 
+
 signals:
     void subjectSelected(Subject);
     void groupListRequested(QStringList);

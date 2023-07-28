@@ -165,3 +165,4 @@ void SubjectSelection::setSqlService(std::shared_ptr<SqlService> database_unit_)
 {
     this->database_unit_ = database_unit_;
 }
+

@@ -27,6 +27,7 @@ SOURCES += \
     base/main.cpp \
     base/mainwindow.cpp \
     employee/methodist.cpp \
+    tables_stuff/colorcolumndelegate.cpp \
     tables_stuff/nonclickabletablewidget.cpp \
     sql_service/sqlservice.cpp \
     student/student.cpp \
@@ -51,6 +52,7 @@ HEADERS += \
     login/loginform.h \
     base/mainwindow.h \
     employee/methodist.h \
+    tables_stuff/colorcolumndelegate.h \
     tables_stuff/nonclickabletablewidget.h \
     sql_service/sqlservice.h \
     student/student.h \

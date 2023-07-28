@@ -30,13 +30,18 @@ public:
     void openTeachersModeration();
     void openSubjectsModeration();
 
+public slots:
+    void closeJournal();
+    void setJournalSubject(Subject subject);
+    void openJoural(QString group);
+
 private:
     Ui::Methodist *ui;
     // SubjectSelection *subjects_window;
     // GroupSelection *groups_window;
     SubjectsModeration *subjects_window_;
     TeachersModeration *teachers_window_;
-    Journal joural_window_;
+    Journal *journal_window_;
 
     void configureBoxesMenus();
 

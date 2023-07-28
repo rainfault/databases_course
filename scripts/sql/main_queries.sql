@@ -26,3 +26,25 @@ FROM Student LEFT OUTER JOIN Field_comprehension
 ON Field_comprehension.student_id = Student.student_id
 LEFT OUTER JOIN field ON Field_comprehension.field = field.field_id
 WHERE student.students_group_number = 'ИВТ-41' and field.field_name = 'Электротехника'
+
+-- (-_-)
+
+
+SELECT Employment.structural_unit_number, Field.field_name, Professor.surname, Professor.name,
+Student.students_group_number, Professor.professor_id, Structural_unit.full_title
+FROM field
+LEFT OUTER JOIN Professor
+ON field.professor_id = Professor.professor_id 
+LEFT OUTER JOIN Employment
+ON Employment.professor_id = Professor.professor_id
+LEFT OUTER JOIN Field_comprehension
+ON Field_comprehension.field = field.field_id
+LEFT OUTER JOIN Student
+ON Field_comprehension.student_id = Student.student_id
+LEFT OUTER JOIN Structural_unit
+ON Field.structural_unit_id = Structural_unit.structural_unit_id
+-- WHERE structural_unit_number = 1
+-- AND Professor.professor_id = 81007
+GROUP BY Employment.structural_unit_number, Field.field_name, Professor.surname, Professor.name, 
+          Student.students_group_number, Structural_unit.full_title, Professor.professor_id
+

@@ -97,6 +97,8 @@ void Journal::updateDatabaseGrades()
 
 void Journal::configurateView()
 {
+    // FIXME: функция старая и делалась до делегатов. При желании возможно
+    // заменить ее функционал обычным делегатом столбца (смотри .../tables_stuff)
     // Оцентровка
     for (int row = 0; row < ui->journal->rowCount(); row++) {
         for (int col = 0; col < ui->journal->columnCount(); col++) {
