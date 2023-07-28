@@ -119,7 +119,7 @@ void Debtors::findContingent()
 
     debtors_query.prepare("SELECT debtor_students.group_id, field.field_name "
                           "FROM debtor_students LEFT OUTER JOIN field "
-                          "ON debtor_students.debt_subject_id = field.field_id "
+                          "ON CAST(debtor_students.debt_subject_id AS UUID) = field.field_id "
                           "WHERE field.professor_id = :id");
     debtors_query.bindValue(":id", current_user_.getUserId());
     debtors_query.exec();

@@ -10,9 +10,11 @@ SubjectsModeration::SubjectsModeration(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    configureTableParameters();
+
     // connects
     connect(ui->search_button, &QPushButton::clicked, this, &SubjectsModeration::searchSubjects);
-    configureTableParameters();
+
 }
 
 SubjectsModeration::~SubjectsModeration()

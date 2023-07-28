@@ -2,13 +2,12 @@
 #define METHODIST_H
 
 #include <QWidget>
-// #include "groupselection.h"
 #include "base/user.h"
-// #include "debtorsjournal.h"
 #include "subjectsmoderation.h"
-//#include "groupselection.h"
 #include "journal.h"
 #include "teachersmoderation.h"
+#include "debtorsmoderation.h"
+#include "debtorsjournal.h"
 
 namespace Ui {
 class Methodist;
@@ -30,6 +29,8 @@ public:
     void openTeachersModeration();
     void openSubjectsModeration();
 
+    void openDebtorsJournal(QString subject);
+
 public slots:
     void closeJournal();
     void setJournalSubject(Subject subject);
@@ -42,6 +43,8 @@ private:
     SubjectsModeration *subjects_window_;
     TeachersModeration *teachers_window_;
     Journal *journal_window_;
+    DebtorsModeration *debtors_window_;
+    DebtorsJournal *debtors_journal_window_;
 
     void configureBoxesMenus();
 

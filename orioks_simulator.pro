@@ -14,6 +14,7 @@ QMAKE_LFLAGS += -Wl,-rpath,E:/Qt/6.4.3/mingw_64/plugins/sqldrivers
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    employee/debtorsmoderation.cpp \
     employee/subjectsmoderation.cpp \
     employee/teachersmoderation.cpp \
     tables_stuff/centeralignmentdelegate.cpp \
@@ -28,6 +29,7 @@ SOURCES += \
     base/mainwindow.cpp \
     employee/methodist.cpp \
     tables_stuff/colorcolumndelegate.cpp \
+    tables_stuff/journaltablewidget.cpp \
     tables_stuff/nonclickabletablewidget.cpp \
     sql_service/sqlservice.cpp \
     student/student.cpp \
@@ -40,6 +42,7 @@ SOURCES += \
 
 HEADERS += \
     base/subject.h \
+    employee/debtorsmoderation.h \
     employee/subjectsmoderation.h \
     employee/teachersmoderation.h \
     tables_stuff/centeralignmentdelegate.h \
@@ -53,6 +56,7 @@ HEADERS += \
     base/mainwindow.h \
     employee/methodist.h \
     tables_stuff/colorcolumndelegate.h \
+    tables_stuff/journaltablewidget.h \
     tables_stuff/nonclickabletablewidget.h \
     sql_service/sqlservice.h \
     student/student.h \
@@ -67,6 +71,7 @@ HEADERS += \
 FORMS += \
     employee/debtors.ui \
     employee/debtorsjournal.ui \
+    employee/debtorsmoderation.ui \
     employee/subjectsmoderation.ui \
     employee/teachersmoderation.ui \
     student/diary.ui \

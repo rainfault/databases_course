@@ -12,10 +12,14 @@ Methodist::Methodist(QWidget *parent) :
     subjects_window_ = new SubjectsModeration();
     teachers_window_ = new TeachersModeration();
     journal_window_ = new Journal();
+    debtors_window_ = new DebtorsModeration();
+    debtors_journal_window_ = new DebtorsJournal();
 
     ui->showing_selector_->addWidget(subjects_window_);
     ui->showing_selector_->addWidget(teachers_window_);
     ui->showing_selector_->addWidget(journal_window_);
+    ui->showing_selector_->addWidget(debtors_window_);
+    ui->showing_selector_->addWidget(debtors_journal_window_);
 
     ui->showing_selector_->setCurrentWidget(subjects_window_);
 
@@ -23,7 +27,7 @@ Methodist::Methodist(QWidget *parent) :
     connect(journal_window_, &Journal::goBack, this, &Methodist::closeJournal);
     connect(subjects_window_, &SubjectsModeration::journalRequested, this, &Methodist::openJoural);
     connect(subjects_window_, &SubjectsModeration::subjectSelected, this, &Methodist::setJournalSubject);
-
+    // connect(debtors_window_, &DebtorsModeration::debtorsJournalRequested, this, &Teacher::openDebtorsJournal);
 
     configureBoxesMenus();
 
@@ -38,6 +42,14 @@ Methodist::~Methodist()
 void Methodist::setCurrentUser(User user)
 {
     current_methodist_ = user;
+    debtors_journal_window_->setCurrentUser(user);
+}
+
+void Methodist::openDebtorsJournal(QString subject)
+{
+    // TODO
+    debtors_journal_window_->openSelectedSubject(subject);
+    ui->showing_selector_->setCurrentWidget(debtors_journal_window_);
 }
 
 void Methodist::closeJournal()
@@ -63,6 +75,10 @@ void Methodist::configureBoxesMenus()
 
     study_menu->addAction("Текущие дисциплины", [this]() {
         ui->showing_selector_->setCurrentWidget(subjects_window_);
+    });
+
+    study_menu->addAction("Должники", [this]() {
+        ui->showing_selector_->setCurrentWidget(debtors_window_);
     });
 
     prepare_menu->addAction("Назначить преподавателя", [this] {

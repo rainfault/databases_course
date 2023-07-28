@@ -65,6 +65,7 @@ void Journal::fillMarks(QSqlQuery marks_record)
         ++ rows;
     }
 
+    ui->journal->setJournalMap(students_id_);
     configurateView();
 }
 
@@ -91,7 +92,6 @@ void Journal::updateDatabaseGrades()
 
         update_query.exec();
     }
-
     qDebug() << "Marks list updated!";
 }
 

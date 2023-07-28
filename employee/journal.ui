@@ -94,7 +94,7 @@ QPushButton:hover {
     </layout>
    </item>
    <item>
-    <widget class="QTableWidget" name="journal">
+    <widget class="JournalTableWidget" name="journal">
      <property name="styleSheet">
       <string notr="true">background-color: transparent;</string>
      </property>
@@ -128,6 +128,13 @@ QPushButton:hover {
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>JournalTableWidget</class>
+   <extends>QTableWidget</extends>
+   <header>tables_stuff/journaltablewidget.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

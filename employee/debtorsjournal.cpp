@@ -21,11 +21,19 @@ DebtorsJournal::~DebtorsJournal()
 void DebtorsJournal::openSelectedSubject(QString subject)
 {
     QSqlQuery debtors_query;
-    debtors_query.prepare("SELECT debtor_students.group_id, debtor_students.surname "
-                          "FROM debtor_students LEFT OUTER JOIN field "
-                          "ON debtor_students.debt_subject_id = field.field_id "
-                          "WHERE field.field_name = :subject "
-                          "AND field.professor_id = :id");
+
+    if (current_user_.getAcessLevel() == User::AcessLevel::teacher)
+        debtors_query.prepare("SELECT debtor_students.group_id, debtor_students.surname "
+                              "FROM debtor_students LEFT OUTER JOIN field "
+                              "ON debtor_students.debt_subject_id = field.field_id "
+                              "WHERE field.field_name = :subject "
+                              "AND field.professor_id = :id");
+    else
+        debtors_query.prepare("SELECT debtor_students.group_id, debtor_students.surname "
+                              "FROM debtor_students LEFT OUTER JOIN field "
+                              "ON debtor_students.debt_subject_id = field.field_id "
+                              "WHERE field.field_name = :subject ");
+
     debtors_query.bindValue(":subject", subject);
     debtors_query.bindValue(":id", current_user_.getUserId());
     debtors_query.exec();
