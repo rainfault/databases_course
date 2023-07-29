@@ -17,6 +17,8 @@ TeachersModeration::TeachersModeration(QWidget *parent) :
     connect(ui->search_button, &QPushButton::clicked, this, &TeachersModeration::searchByDiscipline);
     connect(ui->save_button, &QPushButton::clicked, this, &TeachersModeration::save);
 
+    ui->current_teacher->setReadOnly(true);
+
 }
 
 TeachersModeration::~TeachersModeration()

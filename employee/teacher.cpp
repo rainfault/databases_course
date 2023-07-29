@@ -51,6 +51,7 @@ void Teacher::setCurrentUser(User user)
     current_teacher_ = user;
     subjects_window_->setCurrentUser(current_teacher_);
     debtors_window_->setCurrentUser(current_teacher_);
+    ui->homepage_button->setText(current_teacher_.getFullUsername());
 }
 
 void Teacher::setSqlUnit(std::shared_ptr<SqlService> unit)
