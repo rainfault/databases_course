@@ -18,24 +18,16 @@ DebtorsJournal::~DebtorsJournal()
     delete ui;
 }
 
-void DebtorsJournal::openSelectedSubject(QString subject)
+void DebtorsJournal::openSelectedSubject(Subject subject)
 {
     QSqlQuery debtors_query;
 
-    if (current_user_.getAcessLevel() == User::AcessLevel::teacher)
-        debtors_query.prepare("SELECT debtor_students.group_id, debtor_students.surname "
+    debtors_query.prepare("SELECT debtor_students.group_id, debtor_students.surname "
                               "FROM debtor_students LEFT OUTER JOIN field "
-                              "ON debtor_students.debt_subject_id = field.field_id "
-                              "WHERE field.field_name = :subject "
-                              "AND field.professor_id = :id");
-    else
-        debtors_query.prepare("SELECT debtor_students.group_id, debtor_students.surname "
-                              "FROM debtor_students LEFT OUTER JOIN field "
-                              "ON debtor_students.debt_subject_id = field.field_id "
-                              "WHERE field.field_name = :subject ");
+                              "ON CAST(debtor_students.debt_subject_id AS UUID) = field.field_id "
+                              "WHERE field.field_id = :id");
 
-    debtors_query.bindValue(":subject", subject);
-    debtors_query.bindValue(":id", current_user_.getUserId());
+    debtors_query.bindValue(":id", subject.subject_id);
     debtors_query.exec();
 
     fillDebtorsList(std::move(debtors_query));
@@ -62,10 +54,6 @@ void DebtorsJournal::fillDebtorsList(QSqlQuery query)
     }
 }
 
-void DebtorsJournal::setCurrentUser(User user)
-{
-    this->current_user_ = user;
-}
 
 void DebtorsJournal::setJournalTableParameters()
 {

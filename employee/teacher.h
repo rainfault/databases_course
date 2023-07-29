@@ -35,7 +35,7 @@ public:
 public slots:
     void setWorkflow(Subject subject);
     void openJoural(QString group);
-    void openDebtorsJournal(QString subject);
+    void openDebtorsJournal(Subject subject);
     void openGroupSelection(QStringList groups);
     void openSubjectSelecion();
     void openDebtorsSelection();

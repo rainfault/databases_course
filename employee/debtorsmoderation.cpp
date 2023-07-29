@@ -10,6 +10,10 @@ DebtorsModeration::DebtorsModeration(QWidget *parent) :
     ui->setupUi(this);
     configureDebtorsTable();
 
+    fillGroups();
+    fillTeachers();
+    fillStructuralUnits();
+
     //connects
     connect(ui->search_button, &QPushButton::clicked, this, &DebtorsModeration::searchDebtors);
 }
@@ -22,9 +26,8 @@ DebtorsModeration::~DebtorsModeration()
 void DebtorsModeration::searchDebtors()
 {
     QSqlQuery debtors_query;
-    QString base_query_text = "select Structural_unit.full_title, Field.field_name, debtor_students.group_id, "
-                              "Field.field_id, debtor_students.group_id, "
-                              "Professor.professor_id, Structural_unit.structural_unit_id, Professor.surname "
+    QString base_query_text = "select Professor.surname, Field.field_name, string_agg(DISTINCT debtor_students.group_id, ', '), "
+                              "Field.field_id, Professor.professor_id, Structural_unit.structural_unit_id "
                               "from debtor_students "
                               "LEFT OUTER JOIN  Field "
                               "ON CAST(debtor_students.debt_subject_id AS UUID) = field.field_id "
@@ -32,7 +35,7 @@ void DebtorsModeration::searchDebtors()
                               "ON Field.structural_unit_id = Structural_unit.structural_unit_id "
                               "LEFT OUTER JOIN Professor "
                               "ON field.professor_id = Professor.professor_id "
-                              "WHERE 1 = 1 "; // Позволяет начинать добавлять условия сразу с AND
+                              "WHERE 1 = 1 "; // Такая запись позволяет далее гибко добавлять условия через AND
 
     QString structural_id_condition = ui->structural_box->currentText();
     QString subject_name_condition = ui->subject_name->text();
@@ -53,11 +56,10 @@ void DebtorsModeration::searchDebtors()
 
     // Обрабатываю группу
     if (group_condition != "Все")
-        base_query_text += QString("AND group_id = '%1' ").arg(group_condition);
+        base_query_text += QString("AND group_id LIKE '%%%%1%%' ").arg(group_condition);
 
     // Добавляю группировку и выполняю запрос
-    base_query_text += QString("GROUP BY field_name, group_id, Professor.professor_id, "
-                               "Structural_unit.structural_unit_id, Field.field_id");
+    base_query_text += QString("GROUP BY Field.field_id, Professor.surname, Professor.professor_id, Structural_unit.structural_unit_id; ");
     debtors_query.prepare(base_query_text);
     debtors_query.exec();
 
@@ -70,6 +72,9 @@ void DebtorsModeration::fillDebtorsTable(QSqlQuery debtors_query)
     ui->debtors_table->clearContents();
     ui->debtors_table->setRowCount(0);
 
+    std::map<QString, std::vector<QString>> journal_links;
+
+
     subjects_.clear();
     subjects_.resize(debtors_query.size());
 
@@ -79,9 +84,9 @@ void DebtorsModeration::fillDebtorsTable(QSqlQuery debtors_query)
         ui->debtors_table->insertRow(rows);
         ui->debtors_table->setRowHeight(rows, 50);
 
-        QString structural_unit_fullname = debtors_query.value(0).toString();
+        QString teacher_surname = debtors_query.value(0).toString();
         QString subject_name = debtors_query.value(1).toString();
-        QString group_name = debtors_query.value(2).toString();
+        QString groups_name = debtors_query.value(2).toString();
         QString subject_id = debtors_query.value(3).toString();
 
         // Создаю привязки для журнала:
@@ -94,9 +99,9 @@ void DebtorsModeration::fillDebtorsTable(QSqlQuery debtors_query)
         hlw->addWidget(journal_link, 0, Qt::AlignCenter);
         button_container->setLayout(hlw);
 
-        ui->debtors_table->setItem(rows, 0, new QTableWidgetItem(structural_unit_fullname));
+        ui->debtors_table->setItem(rows, 0, new QTableWidgetItem(teacher_surname));
         ui->debtors_table->setItem(rows, 1, new QTableWidgetItem(subject_name));
-        ui->debtors_table->setItem(rows, 2, new QTableWidgetItem(group_name));
+        ui->debtors_table->setItem(rows, 2, new QTableWidgetItem(groups_name));
         ui->debtors_table->setCellWidget(rows, 3, button_container);
 
         connect(journal_link, &QPushButton::clicked, this, [rows, this]() {
@@ -176,4 +181,6 @@ void DebtorsModeration::configureDebtorsTable()
 void DebtorsModeration::handleDebtorsJournalRequest(int record_line)
 {
     // TODO
+    qDebug() << "Clicked! Line: " << record_line;
+    emit debtorsJournalRequested(subjects_[record_line]);
 }

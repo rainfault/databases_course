@@ -27,7 +27,8 @@ Methodist::Methodist(QWidget *parent) :
     connect(journal_window_, &Journal::goBack, this, &Methodist::closeJournal);
     connect(subjects_window_, &SubjectsModeration::journalRequested, this, &Methodist::openJoural);
     connect(subjects_window_, &SubjectsModeration::subjectSelected, this, &Methodist::setJournalSubject);
-    // connect(debtors_window_, &DebtorsModeration::debtorsJournalRequested, this, &Teacher::openDebtorsJournal);
+    connect(debtors_window_, &DebtorsModeration::debtorsJournalRequested, this, &Methodist::openDebtorsJournal);
+    connect(debtors_journal_window_, &DebtorsJournal::goBack, this, &Methodist::openDebtorsModeration);
 
     configureBoxesMenus();
 
@@ -42,12 +43,21 @@ Methodist::~Methodist()
 void Methodist::setCurrentUser(User user)
 {
     current_methodist_ = user;
-    debtors_journal_window_->setCurrentUser(user);
+    // debtors_journal_window_->setCurrentUser(user);
 }
 
-void Methodist::openDebtorsJournal(QString subject)
+void Methodist::openSubjectsModeration()
 {
-    // TODO
+    ui->showing_selector_->setCurrentWidget(subjects_window_);
+}
+
+void Methodist::openDebtorsModeration()
+{
+    ui->showing_selector_->setCurrentWidget(debtors_window_);
+}
+
+void Methodist::openDebtorsJournal(Subject subject)
+{
     debtors_journal_window_->openSelectedSubject(subject);
     ui->showing_selector_->setCurrentWidget(debtors_journal_window_);
 }

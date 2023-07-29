@@ -79,7 +79,7 @@ void Debtors::fillDebtorsGroupsTable(QSqlQuery debtors_query)
             QSqlQuery find_debtor_student;
             find_debtor_student.prepare("SELECT debtor_students.surname "
                                         "FROM debtor_students LEFT OUTER JOIN field "
-                                        "ON debtor_students.debt_subject_id = field.field_id "
+                                        "ON CAST(debtor_students.debt_subject_id AS UUID) = field.field_id "
                                         "WHERE debtor_students.group_id = :group");
             find_debtor_student.bindValue(":group", group_kit[0]);
             find_debtor_student.exec();
@@ -135,6 +135,7 @@ Debtors::~Debtors()
 
 void Debtors::handleDebtorsJournalRequest(int record_line)
 {
+    // Subject
     QString selected_subject = ui->debtors_table->item(record_line, 0)->text();
     emit debtorsJournalRequested(selected_subject);
 }

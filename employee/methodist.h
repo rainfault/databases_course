@@ -28,8 +28,9 @@ public:
     void setCurrentUser(const User user);
     void openTeachersModeration();
     void openSubjectsModeration();
+    void openDebtorsModeration();
 
-    void openDebtorsJournal(QString subject);
+    void openDebtorsJournal(Subject subject);
 
 public slots:
     void closeJournal();

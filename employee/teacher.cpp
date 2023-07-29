@@ -27,7 +27,7 @@ Teacher::Teacher(QWidget *parent) :
 
     // connects:
     connect(groups_window_, &GroupSelection::journalRequested, this, &Teacher::openJoural);
-    connect(debtors_window_, &Debtors::debtorsJournalRequested, this, &Teacher::openDebtorsJournal);
+    // connect(debtors_window_, &Debtors::debtorsJournalRequested, this, &Teacher::openDebtorsJournal);
     connect(subjects_window_, &SubjectSelection::groupListRequested, this, &Teacher::openGroupSelection);
     connect(journal_window_, &Journal::goBack, this, &Teacher::closeJournal);
     connect(groups_window_, &GroupSelection::goBack, this, &Teacher::openSubjectSelecion);
@@ -51,7 +51,6 @@ void Teacher::setCurrentUser(User user)
     current_teacher_ = user;
     subjects_window_->setCurrentUser(current_teacher_);
     debtors_window_->setCurrentUser(current_teacher_);
-    debtors_journal_window_->setCurrentUser(current_teacher_);
 }
 
 void Teacher::setSqlUnit(std::shared_ptr<SqlService> unit)
@@ -72,7 +71,7 @@ void Teacher::openJoural(QString group)
     journal_window_->openGroup(group);
 }
 
-void Teacher::openDebtorsJournal(QString subject)
+void Teacher::openDebtorsJournal(Subject subject)
 {
     debtors_journal_window_->openSelectedSubject(subject);
     ui->showing_selector_->setCurrentWidget(debtors_journal_window_);

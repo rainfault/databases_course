@@ -4,7 +4,7 @@
 #include <QWidget>
 #include <QSqlQuery>
 
-#include "base/user.h"
+#include "base/subject.h"
 
 
 namespace Ui {
@@ -19,14 +19,17 @@ public:
     explicit DebtorsJournal(QWidget *parent = nullptr);
     ~DebtorsJournal();
 
-    void openSelectedSubject(QString subject);
+    void openSelectedSubject(Subject subject);
     void fillDebtorsList(QSqlQuery query);
-    void setCurrentUser(User user);
+    // void setCurrentSubject (Subject subject);
     void setJournalTableParameters();
 
 private:
     Ui::DebtorsJournal *ui;
-    User current_user_;
+    // User current_user_;
+    // Subject current_subject_;
+
+
 
 signals:
     void goBack();

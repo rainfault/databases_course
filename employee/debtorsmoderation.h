@@ -37,6 +37,9 @@ private:
     Ui::DebtorsModeration *ui;
     void configureDebtorsTable();
 
+signals:
+    void debtorsJournalRequested(Subject);
+
 private slots:
     void handleDebtorsJournalRequest(int record_line);
 
