@@ -46,7 +46,7 @@ void Debtors::setCurrentUser(User user)
 
 void Debtors::fillDebtorsGroupsTable(QSqlQuery debtors_query)
 {
-    std::map<QString, std::vector<QString>> journal_links;
+    std::map<Subject, std::vector<QString>> journal_links;
 
     ui->debtors_table->clearContents();
     ui->debtors_table->setRowCount(0);
@@ -55,20 +55,22 @@ void Debtors::fillDebtorsGroupsTable(QSqlQuery debtors_query)
     while (debtors_query.next()) {
         QString group_name = debtors_query.value(0).toString();
         QString subject = debtors_query.value(1).toString();
-        journal_links[subject].push_back(group_name);
+        QString subject_id = debtors_query.value(2).toString();
+        Subject current_subject{subject, subject_id};
+        journal_links[current_subject].push_back(group_name);
     }
 
-    std::vector<QString> subjects;
+    current_subjects_.clear();
     for (const auto& pair : journal_links)
-        subjects.push_back(pair.first);
+        current_subjects_.push_back(pair.first);
 
     // Форматирую представление:
-    for (size_t i = 0; i < subjects.size(); ++i) {
+    for (size_t i = 0; i < current_subjects_.size(); ++i) {
         ui->debtors_table->insertRow(i);
 
         QString contingent;
 
-        auto group_kit = journal_links[subjects[i]];
+        auto group_kit = journal_links[current_subjects_[i]];
         if (group_kit.size() != 1) {
             contingent = std::accumulate(group_kit.begin(), group_kit.end(), QString(), [](const QString& a, const QString& b) {
                 return a.isEmpty() ? b : a + "," + b;
@@ -104,7 +106,7 @@ void Debtors::fillDebtorsGroupsTable(QSqlQuery debtors_query)
             handleDebtorsJournalRequest(i);
         });
 
-        ui->debtors_table->setItem(i, 0, new QTableWidgetItem(subjects[i]));
+        ui->debtors_table->setItem(i, 0, new QTableWidgetItem(current_subjects_[i].subject_name));
         ui->debtors_table->setItem(i, 1, new QTableWidgetItem(contingent));
         ui->debtors_table->setCellWidget(i, 2, button_container);
 
@@ -117,7 +119,7 @@ void Debtors::findContingent()
 {
     QSqlQuery debtors_query;
 
-    debtors_query.prepare("SELECT debtor_students.group_id, field.field_name "
+    debtors_query.prepare("SELECT debtor_students.group_id, field.field_name, field.field_id "
                           "FROM debtor_students LEFT OUTER JOIN field "
                           "ON CAST(debtor_students.debt_subject_id AS UUID) = field.field_id "
                           "WHERE field.professor_id = :id");
@@ -135,8 +137,8 @@ Debtors::~Debtors()
 
 void Debtors::handleDebtorsJournalRequest(int record_line)
 {
-    // Subject
-    QString selected_subject = ui->debtors_table->item(record_line, 0)->text();
+    qDebug() << "Clicked! Line: " << record_line;
+    Subject selected_subject = current_subjects_[record_line];
     emit debtorsJournalRequested(selected_subject);
 }
 

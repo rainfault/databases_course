@@ -48,10 +48,13 @@ void Journal::fillMarks(QSqlQuery marks_record)
 
     // Заполняю таблицу с оценками
     while (marks_record.next()) {
-        QString fullname = marks_record.value(1).toString();
-        QString mark = marks_record.value(2).toString();
+        QString surname = marks_record.value(1).toString();
+        QString name = marks_record.value(2).toString();
+        QString patronymic = marks_record.value(3).toString();
+        QString fullname = QStringList{surname, name, patronymic}.join(' ');
+        QString mark = marks_record.value(4).toString();
 
-        qDebug() << fullname << " " << mark;
+        // qDebug() << fullname << " " << mark;
 
         ui->journal->insertRow(rows);
         ui->journal->setItem(rows, 0, new QTableWidgetItem(fullname));
@@ -126,7 +129,7 @@ void Journal::openGroup(QString group)
 
     qDebug() << "Subject: " << current_subject_.subject_name;
 
-    query.prepare("SELECT student.student_id, student.surname, Field_comprehension.mark "
+    query.prepare("SELECT student.student_id, student.surname, student.name, student.patronymic, Field_comprehension.mark "
                   "FROM Student LEFT OUTER JOIN Field_comprehension "
                   "ON Field_comprehension.student_id = Student.student_id "
                   "LEFT OUTER JOIN field ON Field_comprehension.field = field.field_id "

@@ -2,10 +2,10 @@
 #define DEBTORS_H
 
 #include <QWidget>
-#include "debtorsjournal.h"
+#include <QSqlQuery>
 #include "base/subject.h"
 #include "base/user.h"
-#include <QPushButton>
+
 
 namespace Ui {
 class debtors;
@@ -27,12 +27,13 @@ public:
 private:
     Ui::debtors *ui;
     User current_user_;
+    std::vector<Subject> current_subjects_;
 
 private slots:
     void handleDebtorsJournalRequest(int record_line);
 
 signals:
-    void debtorsJournalRequested(QString subject);
+    void debtorsJournalRequested(Subject subject);
 
 };
 

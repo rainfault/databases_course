@@ -4,9 +4,7 @@
 
 #include <QString>
 #include <vector>
-// #include "base/subject.h"
 #include <map>
-// #include "sql_service/sqlservice.h"
 
 class User
 {
@@ -26,7 +24,7 @@ public:
     AcessLevel getAcessLevel() {return this->acess_level_;};
     int getUserId() {return this->user_id_;};
 
-    QString getUserFullname();
+    QString getFullUsername();
 
 private:
     int user_id_{}; // Номер в системе (к примеру, 8200434)

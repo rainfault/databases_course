@@ -11,7 +11,11 @@ void ColorColumnDelegate::paint(QPainter *painter, const QStyleOptionViewItem &o
         painter->setPen(Qt::NoPen);
         painter->setBrush(QColor(0xebf4f9));
         painter->drawRect(option.rect);
+
+        QStyleOptionViewItem centeredOption = option;
+        centeredOption.displayAlignment = Qt::AlignCenter;
+
+        QStyledItemDelegate::paint(painter, centeredOption, index);
         painter->restore();
     }
-    QStyledItemDelegate::paint(painter, option, index);
 }

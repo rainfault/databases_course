@@ -28,6 +28,7 @@ void Student::setCurrentUser(User user)
 {
     current_student_ = user;
     diary_->setStudent(current_student_);
+    ui->homepage_button->setText(current_student_.getFullUsername());
 }
 
 void Student::openDiary()

@@ -22,7 +22,7 @@ void DebtorsJournal::openSelectedSubject(Subject subject)
 {
     QSqlQuery debtors_query;
 
-    debtors_query.prepare("SELECT debtor_students.group_id, debtor_students.surname "
+    debtors_query.prepare("SELECT debtor_students.group_id, debtor_students.surname, debtor_students.name, debtor_students.patronymic "
                               "FROM debtor_students LEFT OUTER JOIN field "
                               "ON CAST(debtor_students.debt_subject_id AS UUID) = field.field_id "
                               "WHERE field.field_id = :id");
@@ -43,11 +43,14 @@ void DebtorsJournal::fillDebtorsList(QSqlQuery query)
     while (query.next()) {
         QString group = query.value(0).toString();
         QString surname = query.value(1).toString();
+        QString name = query.value(2).toString();
+        QString patronymic = query.value(3).toString();
+        QString fullname = QStringList{surname, name, patronymic}.join(' ');
 
         ui->journal->insertRow(rows);
 
         ui->journal->setItem(rows, 0, new QTableWidgetItem(group));
-        ui->journal->setItem(rows, 1, new QTableWidgetItem(surname));
+        ui->journal->setItem(rows, 1, new QTableWidgetItem(fullname));
         ui->journal->setItem(rows, 2, new QTableWidgetItem("2"));
 
         ui->journal->setRowHeight(rows, 50);

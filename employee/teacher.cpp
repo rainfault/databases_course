@@ -27,7 +27,7 @@ Teacher::Teacher(QWidget *parent) :
 
     // connects:
     connect(groups_window_, &GroupSelection::journalRequested, this, &Teacher::openJoural);
-    // connect(debtors_window_, &Debtors::debtorsJournalRequested, this, &Teacher::openDebtorsJournal);
+    connect(debtors_window_, &Debtors::debtorsJournalRequested, this, &Teacher::openDebtorsJournal);
     connect(subjects_window_, &SubjectSelection::groupListRequested, this, &Teacher::openGroupSelection);
     connect(journal_window_, &Journal::goBack, this, &Teacher::closeJournal);
     connect(groups_window_, &GroupSelection::goBack, this, &Teacher::openSubjectSelecion);

@@ -2,6 +2,7 @@
 #include "ui_debtorsmoderation.h"
 
 #include <tables_stuff/tableinterfacehelper.h>
+#include <tables_stuff/centeralignmentdelegate.h>
 
 DebtorsModeration::DebtorsModeration(QWidget *parent) :
     QWidget(parent),
@@ -175,6 +176,12 @@ void DebtorsModeration::configureDebtorsTable()
     ui->debtors_table->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
     ui->debtors_table->horizontalHeader()->setSectionResizeMode(2, QHeaderView::Stretch);
     ui->debtors_table->horizontalHeader()->setSectionResizeMode(3, QHeaderView::Stretch);
+
+    // Установка делегатов
+    ui->debtors_table->setItemDelegateForColumn(0, new CenterAlignmentDelegate());
+    ui->debtors_table->setItemDelegateForColumn(1, new CenterAlignmentDelegate());
+    ui->debtors_table->setItemDelegateForColumn(2, new CenterAlignmentDelegate());
+
 
 }
 

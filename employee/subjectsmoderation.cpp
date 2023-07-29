@@ -44,7 +44,8 @@ void SubjectsModeration::configureTableParameters()
 
     ui->subjects_table->setShowGrid(false);
 
-    // Делегат для второго столбца
+    // Делегаты
+    ui->subjects_table->setItemDelegateForColumn(0, new CenterAlignmentDelegate());
     ui->subjects_table->setItemDelegateForColumn(1, new ColorColumnDelegate());
     ui->subjects_table->setItemDelegateForColumn(2, new CenterAlignmentDelegate());
 
@@ -59,8 +60,8 @@ void SubjectsModeration::searchSubjects()
 {
     // Поиск по выбранным параметрам с помощью фильтров
     QSqlQuery search_query;
-    QString base_query_text = "SELECT Structural_unit.full_title, Field.field_name, student.students_group_number, field.field_id, Professor.surname, Professor.name, "
-                              "Student.students_group_number, Professor.professor_id, Employment.structural_unit_number "
+    QString base_query_text = "SELECT Professor.surname, Field.field_name, student.students_group_number, field.field_id, Structural_unit.full_title, Professor.name, "
+                              "Professor.patronymic, Student.students_group_number, Professor.professor_id, Employment.structural_unit_number "
                               "FROM field "
                               "LEFT OUTER JOIN Professor "
                               "ON field.professor_id = Professor.professor_id "
@@ -169,7 +170,7 @@ void SubjectsModeration::fillTableAfterSearch([[maybe_unused]] QSqlQuery subject
         ui->subjects_table->insertRow(rows);
         ui->subjects_table->setRowHeight(rows, 50);
 
-        QString structural_unit_fullname = subjects_query.value(0).toString();
+        QString teacher_surname = subjects_query.value(0).toString();
         QString subject_name = subjects_query.value(1).toString();
         QString group_name = subjects_query.value(2).toString();
         QString subject_id = subjects_query.value(3).toString();
@@ -184,7 +185,7 @@ void SubjectsModeration::fillTableAfterSearch([[maybe_unused]] QSqlQuery subject
         hlw->addWidget(journal_link, 0, Qt::AlignCenter);
         button_container->setLayout(hlw);
 
-        ui->subjects_table->setItem(rows, 0, new QTableWidgetItem(structural_unit_fullname));
+        ui->subjects_table->setItem(rows, 0, new QTableWidgetItem(teacher_surname));
         ui->subjects_table->setItem(rows, 1, new QTableWidgetItem(subject_name));
         ui->subjects_table->setItem(rows, 2, new QTableWidgetItem(group_name));
         ui->subjects_table->setCellWidget(rows, 3, button_container);

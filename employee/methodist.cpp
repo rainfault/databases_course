@@ -43,7 +43,7 @@ Methodist::~Methodist()
 void Methodist::setCurrentUser(User user)
 {
     current_methodist_ = user;
-    // debtors_journal_window_->setCurrentUser(user);
+    ui->homepage_button->setText(current_methodist_.getFullUsername());
 }
 
 void Methodist::openSubjectsModeration()
