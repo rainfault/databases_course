@@ -24,12 +24,12 @@ LoginForm::LoginForm(QWidget *parent) :
     // ui->password_edit->setText("123456");
 
     // Student:
-    // ui->login_edit->setText("856271");
-    // ui->password_edit->setText("2001-06-03");
+    ui->login_edit->setText("856271");
+    ui->password_edit->setText("2001-06-03");
 
     // Methodist:
-    ui->login_edit->setText("90010");
-    ui->password_edit->setText("123456");
+    // ui->login_edit->setText("90010");
+    // ui->password_edit->setText("123456");
 }
 
 LoginForm::~LoginForm()
@@ -56,22 +56,26 @@ void LoginForm::authoriseRequested()
 
     // Делаю запрос и получаю первый результат:
     login_query.exec();
-    login_query.next();
 
-    QString valid_password = login_query.value(0).toString();
+    if (login_query.next()) {
 
-    if (requested_password == valid_password) {
-        // Создаю сеанс для пользователя
-        current_user_.setUserId((ui->login_edit->text()).toInt());
-        current_user_.setAcessLevel(static_cast<User::AcessLevel>(login_query.value(1).toInt()));
+        QString valid_password = login_query.value(0).toString();
 
-        // Получаю уровень доступа учетной записи
-        // current_user_.acess_level = static_cast<User::AcessLevel>(login_query.value(1).toInt());
+        if (requested_password == valid_password) {
+            // Создаю сеанс для пользователя
+            current_user_.setUserId((ui->login_edit->text()).toInt());
+            current_user_.setAcessLevel(static_cast<User::AcessLevel>(login_query.value(1).toInt()));
 
-        // Вход успешен
-        emit authorized(current_user_);
+            // Получаю уровень доступа учетной записи
+            // current_user_.acess_level = static_cast<User::AcessLevel>(login_query.value(1).toInt());
+
+            // Вход успешен
+            emit authorized(current_user_);
+        } else {
+            // Авторизация неудачна
+            showLoginError();
+        }
     } else {
-        // Авторизация неудачна
         showLoginError();
     }
 }
