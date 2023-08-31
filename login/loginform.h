@@ -33,12 +33,6 @@ private slots:
 private:
     Ui::LoginForm *ui;
 
-//    std::map<QString, AcessLevel> acess_levels {
-//        {"STUDENT", AcessLevel::student},
-//        {"TEACHER", AcessLevel::teacher},
-//        {"METHODIST", AcessLevel::methodist}
-//    };
-
     void showLoginError();
 
     User current_user_;

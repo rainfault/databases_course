@@ -36,12 +36,14 @@ void SubjectsModeration::setCurrentUser(User user)
 
 void SubjectsModeration::configureTableParameters()
 {
+    // Устанавливаю количество столбцов
     ui->subjects_table->setColumnCount(4);
 
-    // Создание таблички для отображения списка дисциплин
+    // Отключаю отображение названий столбцов по горизонтали и нумерацию по горизонтали
     ui->subjects_table->horizontalHeader()->setVisible(false);
     ui->subjects_table->verticalHeader()->setVisible(false);
 
+    // Отключаю отображение сетки
     ui->subjects_table->setShowGrid(false);
 
     // Делегаты
