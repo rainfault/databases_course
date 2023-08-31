@@ -43,8 +43,6 @@ LEFT OUTER JOIN Student
 ON Field_comprehension.student_id = Student.student_id
 LEFT OUTER JOIN Structural_unit
 ON Field.structural_unit_id = Structural_unit.structural_unit_id
--- WHERE structural_unit_number = 1
--- AND Professor.professor_id = 81007
 GROUP BY Employment.structural_unit_number, Field.field_name, Professor.surname, Professor.name, 
           Student.students_group_number, Structural_unit.full_title, Professor.professor_id
 

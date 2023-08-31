@@ -11,7 +11,7 @@ SqlService::SqlService()
 
 void SqlService::databaseConnect()
 {
-    db = QSqlDatabase::addDatabase("QPSQL");
+    db = QSqlDatabase::addDatabase("QPSQL"); // создается
     db.setHostName(host_name_); // IP-адрес вашей виртуальной машины Ubuntu (см. на виртуалке)
     db.setPort(5432); // порт по умолчанию для PostgreSQL
     db.setDatabaseName(database_name_); // имя вашей базы данных (см. на виртуалке)
@@ -19,6 +19,7 @@ void SqlService::databaseConnect()
     db.setPassword(password_); // ваш пароль для базы данных (см. на виртуалке)
     db.setConnectOptions("client_encoding=UTF8");
 
+    // Проверяем, успешно ли подключение:
     if (!db.open()) {
         qDebug() << "Failed to connect to database.";
         qDebug() << "Error: ";
